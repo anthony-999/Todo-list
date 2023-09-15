@@ -85,18 +85,20 @@
                             $result = $conn->query($querySelect );
                             
                             if ($result->num_rows > 0) {
+                                $date = new DateTime('Asia/Manila');
+                               
                             // output data of each row
                                 while($row = $result->fetch_assoc()) {
                                     echo '<li class="list-group-item d-flex justify-content-between align-items-center mt-1">'
-                                    .$row["user_input"].'<br>
+                                    .$row["user_input"].'<span style="margin-left:auto;">'.$date->format('m/d/Y').'</span><br>
                                         <div  class="d-flex justify-content-center align-items-center gap-3">
 
                                             <form action="delete.php" method="post">
                                         
-                                            <button type="submit" class="btn btn-danger" name="deleteBtn">
+                                            <button type="submit" class="btn btn-danger ms-2" name="deleteBtn">
                                             
                                           
-                                            <i class="fa-solid fa-trash"></i>
+                                            <i class="fa-solid fa-trash "></i>
                                           
                                             </button>
                                             <input type="hidden" name="delete_inputID" value='.$row['input_ID'].' >
