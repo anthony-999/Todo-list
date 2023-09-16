@@ -76,8 +76,7 @@
                         <?php 
                         
                             include 'database.php';
-                            include 'create.php';
-                           
+                          
 
                           
 
