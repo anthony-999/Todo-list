@@ -1,34 +1,36 @@
 <?php 
 
-    function create(){
-
-
     include 'database.php';
+    $user_input = '';
+    $user_inputErr = '';
+    $addMessage = '';
+
 
     if(isset($_POST['submit'])){
-     
-        $user_input = $_POST['user_input'];
 
-         $sql = "INSERT INTO tbl_todolist (user_input) VALUES ('$user_input')";
-         $sqlQuery = mysqli_query($conn, $sql);
+        // VALIDATE INPUT
+        if(empty($_POST['user_input'])){
+            $user_inputErr = 'Input is required';
+        }else{
+            $user_input = filter_input(INPUT_POST, 'user_input', FILTER_SANITIZE_FULL_SPECIAL_CHARS);    
+        }
+      
+        if(!empty($user_input)){
 
-         echo "<script>Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Added Succesfully',
-            showConfirmButton: false,
-            timer: 1500
-          })</script>";
+            // ADD TO DATABASE
+            $sql = "INSERT INTO tbl_todolist (user_input) VALUES ('$user_input')";
+            $sqlQuery = mysqli_query($conn, $sql);
+            
+            $addMessage = 'Add Successfully';
 
+         
 
+        
+        }
 
     }
-}
 
-    
 
-                  
-   
 ?>
 
 <!DOCTYPE html>
@@ -53,21 +55,27 @@
 
     <div class="container-wrapper">
         <div class="container-lg">
-        <?php create(); ?>
+       
             <div class="header    mt-5">
           
                 <h1 class="text-center text-info">To do List</h1>
+
+               
                    
-                    <form action="" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                    <h3 class="text-success text-center"><?php echo $addMessage; ?></h3>
                         <div class="input-group mt-5">
-                            <input type="text" class="form-control" placeholder="Enter Activity" aria-label="Enter Activity" aria-describedby="basic-addon2"  name="user_input">
+                            <input type="text" class="form-control <?php echo !$user_inputErr ?: 'is-invalid'; ?>" placeholder="Enter Activity" aria-label="Enter Activity" aria-describedby="basic-addon2"  name="user_input">
                             <span class="input-group-text" id="basic-addon2">
                                 <input class="btn btn-success " type="submit" value="Submit" name="submit">
                                 <input class="btn btn-primary " type="hidden" value="Submit" name="input_ID">
                             </span>
+                            <div class="invalid-feedback">
+                                <?php echo $user_inputErr; ?>
+                            </div>
                         </div>
                     </form>
-                   <?php  ?>
+                 
                 
 
            
