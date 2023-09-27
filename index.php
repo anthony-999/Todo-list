@@ -63,7 +63,7 @@
                
                    
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-                    <h3 class="text-success text-center"><?php echo $addMessage; ?></h3>
+                    <h3 class="text-success text-center" id="addMessage"><?php echo $addMessage; ?></h3>
                         <div class="input-group mt-5">
                             <input type="text" class="form-control <?php echo !$user_inputErr ?: 'is-invalid'; ?>" placeholder="Enter Activity" aria-label="Enter Activity" aria-describedby="basic-addon2"  name="user_input">
                             <span class="input-group-text" id="basic-addon2">
@@ -155,6 +155,15 @@
 
      <!-- BOOTSTRAP SCRIPT CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-                               
+    <script>
+        setTimeout(function(){
+            var addMessage = document.getElementById('addMessage');
+            if(addMessage){
+                addMessage.style.display = "none";
+            }
+
+        },1000);
+       
+    </script>               
 </body>
 </html>
